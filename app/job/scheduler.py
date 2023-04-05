@@ -1,4 +1,5 @@
 import json
+import random
 import threading
 import time
 from time import ctime
@@ -16,7 +17,9 @@ def rest(log, interval):
     rest
     """
     try:
-        time.sleep(interval)
+        rdi = random.randint(0, 10)
+        logger.info(f"{log} rest interval {interval} rdi {rdi}")
+        time.sleep(interval + rdi)
     except Exception as e:
         logger.error(log, e)
 

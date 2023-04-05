@@ -8,9 +8,6 @@ from app.core.events import create_stop_app_handler, create_start_app_handler
 
 
 def get_application():
-    # 日志配置
-    settings.configure_logging()
-
     # 初始化
     _app = FastAPI(title=settings.PROJECT_NAME)
 
@@ -45,6 +42,11 @@ def get_application():
     return _app
 
 
+# 日志配置
+settings.configure_logging()
+
+
+# fastapi app
 app = get_application()
 
 if __name__ == '__main__':
