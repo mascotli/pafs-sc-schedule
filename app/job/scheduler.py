@@ -30,7 +30,7 @@ class WorkerThread(threading.Thread):
         self.args = args
         self.res = None
         self.idle = True
-        self.interval = 300
+        self.interval = 5
         self.__run = True
         from app.rds.redis_client import redis_cli as cli
         self.__redis = cli
@@ -114,7 +114,7 @@ class Scheduler(object):
         from app.rds.redis_client import redis_cli as cli
         self.__redis = cli
         self.__run = True
-        self.__interval = 300
+        self.__interval = 3
         self.__init_size = 1
         self.__core_size = 10
         self.__max_size = 15
@@ -184,10 +184,7 @@ class Scheduler(object):
             logger.info(f"main thread statistic running: {stats['running']} pending: {stats['pending']} complete: {stats['complete']}, idle: {stats['idle']}, available: {stats['available']}")
 
             logger.info(f"main thread {self.name} sleep start ")
-            try:
-                time.sleep(self.__interval)
-            except Exception as e:
-                logger.error(f"main thread {self.name} sleep error", e)
+            rest(f"main thread {self.name} sleep error", self.__interval)
             logger.info(f"main thread {self.name} sleep end ")
 
         # wait thread end
