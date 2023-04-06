@@ -122,7 +122,8 @@ class Scheduler(object):
         self.__core_size = 10
         self.__max_size = 15
         self.__main_thread = TaskThread(func=self.schedule, args=(), name=self.name)
-        self.__work_thread_list = [WorkerThread(func=do_dispatch, args=(i,), name='work-thread-' + str(i + 1)) for i in range(self.__init_size)]
+        self.__work_thread_list = [WorkerThread(func=do_dispatch, args=(i,), name='work-thread-' + str(i + 1)) for i in
+                                   range(self.__init_size)]
 
     @property
     def run(self):
@@ -147,7 +148,7 @@ class Scheduler(object):
         self.__main_thread.start()
 
     def statistic(self):
-        d = {"running":0, "pending":0, "complete":0, "idle": 0, "available": 0}
+        d = {"running": 0, "pending": 0, "complete": 0, "idle": 0, "available": 0}
 
         for t in self.__work_thread_list:
             if t.get_run() and t.get_idle():
@@ -184,7 +185,8 @@ class Scheduler(object):
                 break
             stats = self.statistic()
 
-            logger.info(f"main thread statistic running: {stats['running']} pending: {stats['pending']} complete: {stats['complete']}, idle: {stats['idle']}, available: {stats['available']}")
+            logger.info(
+                f"main thread statistic running: {stats['running']} pending: {stats['pending']} complete: {stats['complete']}, idle: {stats['idle']}, available: {stats['available']}")
 
             logger.info(f"main thread {self.name} sleep start ")
             rest(f"main thread {self.name} sleep error", self.__interval)
@@ -197,8 +199,9 @@ class Scheduler(object):
         logger.info(f"main thread {self.name} wait all worker thread complete end ")
 
         for t in self.__work_thread_list:
-            logger.error(t.get_name() + " 's result is " + json.dumps(t.get_result(), ensure_ascii=False).encode('utf8').decode('utf-8'))
+            logger.error(
+                t.get_name() + " 's result is " + json.dumps(t.get_result(), ensure_ascii=False).encode('utf8').decode(
+                    'utf-8'))
 
 
 job_scheduler = Scheduler()
-
